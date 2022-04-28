@@ -149,7 +149,10 @@ class Matcher:
         None
         """
         scores = np.zeros(len(self.X))
-        for i in range(self.nmodels):
+        if len(self.models) == 0:
+            raise Exception('No models fit.')
+            
+        for i in range(len(self.models)):
             m = self.models[i]
             scores += m.predict(self.X[m.params.index])
         self.data['scores'] = scores/self.nmodels
